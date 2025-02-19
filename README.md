@@ -1,9 +1,11 @@
 # GenAnalyzer
 
-This program can be run under `CMSSW_10_2_5`.
+This program can be run with the same CMSSW version which generates MC samples.
+
+(e.g. `CMSSW_10_6_20_patch1`)
 
 ## 1. Setup
-In `CMSSW_10_2_5/src/` directory, git clone this repository via
+In `CMSSW_x_y_z/src/` directory, git clone this repository via
 ```bash
 git clone git@github.com:Alph-omeg/GenAnalyzer.git
 ```
