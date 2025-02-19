@@ -1,0 +1,8 @@
+/test/*
+!/test/GenAnalyzer_cfg.py
+!/test/multicrab_MC
+!/test/BuildFile.xml
+!/test/test_catch2_main.cc
+!/test/test_catch2_GenAnalyzer.cc
+/interface
+/python/__init__.pyc
