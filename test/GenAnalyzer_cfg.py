@@ -16,14 +16,14 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
-    fileNames = cms.untracked.vstring("file:/eos/home-c/chensh/JPsiPsi2s/GEN_nofilter/SPS/ULPythia2018/CMSSW_10_6_20_patch1/src/GenAnalyzer/GenAnalyzer/test/BPH-GEN-13TeV_1.root")
+    fileNames = cms.untracked.vstring("file:/eos/user/c/chiw/JJP/tryHelac/CMSSW_12_4_14_patch3_mc_demo/src/test_JpsiPhi_Run3Summer22_GENSIM.root")
 )
 
 # ----------------------------------------------------------------------
 # Output root file (monitoring histograms)
 # ----------------------------------------------------------------------
 process.TFileService=cms.Service('TFileService',
-    fileName=cms.string('SPS_JJ_withGenFilter.root')
+    fileName=cms.string('JpsiPhi_GEN_level.root')
 )
 
 from FWCore.Modules.printContent_cfi import *

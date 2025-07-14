@@ -6,3 +6,4 @@
 !/test/test_catch2_GenAnalyzer.cc
 /interface
 /python/__init__.pyc
+*/__pycache__

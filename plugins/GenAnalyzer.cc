@@ -74,7 +74,7 @@
 #include "TH2F.h"
 
 // Development mode
-// #define deve
+#define deve
 
 using namespace std;
 using namespace edm;
@@ -107,14 +107,16 @@ class GenAnalyzer : public edm::EDAnalyzer  {
         vector<int> GENjpsi_status;
         vector<int> GENjpsi_nMom;
         vector<double> GENjpsi_nDau;
-        vector<vector<int>> GENjpsi_anc;
-        vector<vector<int>> GENjpsi_sib;
+        vector<vector<int> > GENjpsi_anc;
+        vector<vector<int> > GENjpsi_sib;
         #endif
         vector<double> GENjpsi_pt;
         vector<double> GENjpsi_eta;
         vector<double> GENjpsi_mass;
-        vector<vector<double>> GENjpsi_mu_eta;
-        vector<vector<double>> GENjpsi_mu_pt;
+        // vector<vector<double> > GENjpsi_mu_eta;
+        // vector<vector<double> > GENjpsi_mu_pt;
+        vector <double> GENjpsi_mu_eta;
+        vector <double> GENjpsi_mu_pt;
         //// psi(2S)
         #ifdef deve
         int GENpsi2s_ins;
@@ -128,8 +130,8 @@ class GenAnalyzer : public edm::EDAnalyzer  {
         vector<double> GENpsi2s_pt;
         vector<double> GENpsi2s_eta;
         vector<double> GENpsi2s_mass;
-        vector<vector<double>> GENpsi2s_mu_eta;
-        vector<vector<double>> GENpsi2s_mu_pt;
+        vector<vector<double> > GENpsi2s_mu_eta;
+        vector<vector<double> > GENpsi2s_mu_pt;
         //// muon
         #ifdef deve
         int GENmu_ins;
@@ -138,6 +140,32 @@ class GenAnalyzer : public edm::EDAnalyzer  {
         vector<double> GENmu_pt;
         vector<double> GENmu_eta;
         #endif
+        /// Phi -> KK verification
+        int GEN_phi_ins;
+        vector<int> GEN_phi_status;
+        vector<int> GEN_phi_momId;
+        vector<int> GEN_phi_nDau;
+        vector<vector<int>> GEN_phi_anc;
+        vector<vector<int>> GEN_phi_sib;
+        vector<int> GEN_phi_id;
+        vector<double> GEN_phi_pt;
+        vector<double> GEN_phi_eta;
+        vector<double> GEN_phi_mass;
+        // vector< vector<double> > GEN_phi_K_eta;
+        // vector< vector<double> > GEN_phi_K_pt;
+        vector<double> GEN_phi_K_eta;
+        vector<double> GEN_phi_K_pt;
+        // Look into all kaons
+        int GEN_K_ins;
+        vector<int>             GEN_K_status;
+        vector<int>             GEN_K_id;
+        vector<double>          GEN_K_pt;
+        vector<double>          GEN_K_eta;
+        vector<int>             GEN_K_momId;
+        vector<int>             GEN_K_nDau;
+        vector<vector<int> >    GEN_K_anc;
+        vector<vector<int> >    GEN_K_sib;
+        // -------------------------
   
         const edm::ParameterSet& conf;
         edm::EDGetTokenT<vector<reco::GenParticle> > genParticleToken_;
@@ -201,6 +229,30 @@ void GenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
     GENmu_pt.clear();
     GENmu_eta.clear();
     #endif
+    // Phi
+    GEN_phi_ins = 0;
+    GEN_phi_status.clear();
+    GEN_phi_momId.clear();
+    GEN_phi_nDau.clear();
+    GEN_phi_anc.clear();
+    GEN_phi_sib.clear();
+    GEN_phi_id.clear();
+    GEN_phi_pt.clear();
+    GEN_phi_eta.clear();
+    GEN_phi_mass.clear();
+    GEN_phi_K_eta.clear();
+    GEN_phi_K_pt.clear();
+    // Kaon
+    GEN_K_ins = 0;
+    GEN_K_status.clear();
+    GEN_K_id.clear();
+    GEN_K_pt.clear();
+    GEN_K_eta.clear();
+    GEN_K_momId.clear();
+    GEN_K_nDau.clear();
+    GEN_K_anc.clear();
+    GEN_K_sib.clear();
+    // Clear temporary vectors
 }
 // ------------ method called once each job just before starting event loop  ------------
 void GenAnalyzer::beginJob() {
@@ -241,6 +293,34 @@ void GenAnalyzer::beginJob() {
     _mytree->Branch("GENmu_pt", &GENmu_pt);
     _mytree->Branch("GENmu_eta", &GENmu_eta);
     #endif
+    // Phi
+    _mytree->Branch("GEN_phi_ins", &GEN_phi_ins);
+    _mytree->Branch("GEN_phi_status", &GEN_phi_status);
+    _mytree->Branch("GEN_phi_momId", &GEN_phi_momId);
+    _mytree->Branch("GEN_phi_nDau", &GEN_phi_nDau);
+    _mytree->Branch("GEN_phi_anc", &GEN_phi_anc);
+    _mytree->Branch("GEN_phi_sib", &GEN_phi_sib);
+    _mytree->Branch("GEN_phi_id", &GEN_phi_id);
+    _mytree->Branch("GEN_phi_pt", &GEN_phi_pt);
+    _mytree->Branch("GEN_phi_eta", &GEN_phi_eta);
+    _mytree->Branch("GEN_phi_mass", &GEN_phi_mass);
+    _mytree->Branch("GEN_phi_K_eta", &GEN_phi_K_eta);
+    _mytree->Branch("GEN_phi_K_pt", &GEN_phi_K_pt);
+    // Kaon
+    _mytree->Branch("GEN_K_ins", &GEN_K_ins);
+    _mytree->Branch("GEN_K_status", &GEN_K_status);
+    _mytree->Branch("GEN_K_id", &GEN_K_id);
+    _mytree->Branch("GEN_K_pt", &GEN_K_pt);
+    _mytree->Branch("GEN_K_eta", &GEN_K_eta);
+    _mytree->Branch("GEN_K_momId", &GEN_K_momId);
+    _mytree->Branch("GEN_K_nDau", &GEN_K_nDau);
+    _mytree->Branch("GEN_K_anc", &GEN_K_anc);
+    _mytree->Branch("GEN_K_sib", &GEN_K_sib);
+    // -------------------------
+    // Event variables
+    _mytree->Branch("_nEvent", &_nEvent, "_nEvent/I");
+    _mytree->Branch("_nRun", &_nRun, "_nRun/I");
+    _mytree->Branch("_nLumi", &_nLumi, "_nLumi/I");
     return;
 }
 // ------------ method called once each job just after ending the event loop  ------------
@@ -275,6 +355,7 @@ void GenAnalyzer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSe
     #endif
     vector<const reco::Candidate *> _temp_GENjpsi;
     vector<const reco::Candidate *> _temp_GENpsi2s;
+    vector<const reco::Candidate *> _temp_GENphi;
 
     for(auto p = genCandidatesCollection->begin(); p != genCandidatesCollection->end(); p++) {
         barcode++;
@@ -291,11 +372,50 @@ void GenAnalyzer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSe
             continue;
         }
 
+        // Kaon
+        if(fabs(p->pdgId()) == 321) {//if the particle is kaon
+            if(p->status() != 1) continue;
+            #ifdef deve
+            GEN_K_ins++;
+            GEN_K_id.push_back(p->pdgId());
+            GEN_K_status.push_back(p->status());
+            GEN_K_pt.push_back(p->pt());
+            GEN_K_eta.push_back(p->eta());
+            if(p->mother(0)) GEN_K_momId.push_back(p->mother(0)->pdgId());
+            GEN_K_nDau.push_back(p->numberOfDaughters());
+            vector<int> _temp_GEN_K_anc;
+            vector<int> _temp_GEN_K_sib;
+            const reco::Candidate *kaon_anc = p->mother(0);
+            const reco::Candidate *kaon_cur = &*p;
+            while(kaon_anc->mother(0)) {
+                for(unsigned int i = 0; i < kaon_anc->numberOfDaughters(); i++) {
+                    if(kaon_anc->daughter(i)->pdgId() == kaon_cur->pdgId()) continue;
+                    _temp_GEN_K_sib.push_back(kaon_anc->daughter(i)->pdgId());
+                }
+                _temp_GEN_K_anc.push_back(kaon_anc->pdgId());
+                _temp_GEN_K_sib.push_back(0);
+                kaon_cur = kaon_anc;
+                kaon_anc = kaon_anc->mother(0);
+            }
+            _temp_GEN_K_anc.push_back(0);
+            _temp_GEN_K_sib.push_back(0);
+            GEN_K_anc.push_back(_temp_GEN_K_anc);
+            GEN_K_sib.push_back(_temp_GEN_K_sib);
+            #endif
+            continue;
+        }
+
         vector<double> _temp_GENmu_pt;
         vector<double> _temp_GENmu_eta;
+        // kaons from decay of phi meson
+        vector<double> _temp_GENphi_K_eta;
+        vector<double> _temp_GENphi_K_pt;
 
         if(p->pdgId() == 443) {// if the particle is J/psi
             if(p->status() != 2) continue;
+            #ifdef deve
+            puts("Found J/psi");
+            #endif
             int nDau = p->numberOfDaughters();
             for(int i = 0; i < nDau; i++) {
                 const reco::Candidate *jpsi_dau = p->daughter(i);
@@ -315,8 +435,10 @@ void GenAnalyzer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSe
             GENjpsi_pt.push_back(p->pt());
             GENjpsi_eta.push_back(p->eta());
             GENjpsi_mass.push_back(p->mass());
-            GENjpsi_mu_eta.push_back(_temp_GENmu_eta);
-            GENjpsi_mu_pt.push_back(_temp_GENmu_pt);
+            // GENjpsi_mu_eta.push_back(_temp_GENmu_eta);
+            // GENjpsi_mu_pt.push_back(_temp_GENmu_pt);
+            GENjpsi_mu_eta.insert(GENjpsi_mu_eta.end(), _temp_GENmu_eta.begin(), _temp_GENmu_eta.end());
+            GENjpsi_mu_pt.insert(GENjpsi_mu_pt.end(), _temp_GENmu_pt.begin(), _temp_GENmu_pt.end());
             //
             const reco::Candidate *jpsi_self = &*p;
             while(jpsi_self->mother(0)->pdgId() == 443) jpsi_self = jpsi_self->mother(0);
@@ -402,11 +524,79 @@ void GenAnalyzer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSe
             //
             #endif
         }
+        // Look for phi meson (PDG ID = 333)
+        if(p->pdgId() == 333) {
+            if(p->status() != 2) continue;
+            #ifdef deve
+            puts("Found phi");
+            #endif
+            int nDau = p->numberOfDaughters();
+            for(int i = 0; i < nDau; i++) {
+                const reco::Candidate *phi_dau = p->daughter(i);
+                while(phi_dau->status() != 1 && phi_dau->daughter(0)) phi_dau = phi_dau->daughter(0);
+                if(fabs(phi_dau->pdgId()) == 321 && phi_dau->status() == 1) {//if daughter of phi is kaon
+                    _temp_GENphi_K_eta.push_back(phi_dau->eta());
+                    _temp_GENphi_K_pt.push_back(phi_dau->pt());
+                }
+                #ifdef deve
+                else {// check why kaons are not recorded
+                    _temp_GENphi_K_eta.push_back((double)phi_dau->pdgId());
+                    _temp_GENphi_K_pt.push_back((double)phi_dau->status());
+                }
+                #endif
+            }
+            GEN_phi_ins++;
+            GEN_phi_status.push_back(p->status());
+            GEN_phi_K_eta.insert(GEN_phi_K_eta.end(), _temp_GENphi_K_eta.begin(), _temp_GENphi_K_eta.end());
+            GEN_phi_K_pt.insert(GEN_phi_K_pt.end(), _temp_GENphi_K_pt.begin(), _temp_GENphi_K_pt.end());
+            // GEN_phi_K_eta.push_back(_temp_GENphi_K_eta);
+            // GEN_phi_K_pt.push_back(_temp_GENphi_K_pt);
+            #ifdef deve
+            puts(">> _temp_GENphi_K content:");
+            for(unsigned int i = 0; i < _temp_GENphi_K_eta.size(); i++) {
+                printf(">> %d: eta = %f, pt = %f\n", i, _temp_GENphi_K_eta[i], _temp_GENphi_K_pt[i]);
+            }
+            puts("<< _temp_GENphi_K content");
+            #endif
+
+            if(p->mother(0)) GEN_phi_momId.push_back(p->mother(0)->pdgId());
+            GEN_phi_nDau.push_back(nDau);
+            vector<int> _temp_GENphi_anc;
+            vector<int> _temp_GENphi_sib;
+            const reco::Candidate *phi_anc = p->mother(0);
+            const reco::Candidate *phi_cur = &*p;
+            while(phi_anc->mother(0)) {
+                for(unsigned int i = 0; i < phi_anc->numberOfDaughters(); i++) {
+                    if(phi_anc->daughter(i)->pdgId() == phi_cur->pdgId()) continue;
+                    _temp_GENphi_sib.push_back(phi_anc->daughter(i)->pdgId());
+                }
+                _temp_GENphi_anc.push_back(phi_anc->pdgId());
+                _temp_GENphi_sib.push_back(0);
+                phi_cur = phi_anc;
+                phi_anc = phi_anc->mother(0);
+            }
+            _temp_GENphi_anc.push_back(0);
+            _temp_GENphi_sib.push_back(0);
+            GEN_phi_anc.push_back(_temp_GENphi_anc);
+            GEN_phi_sib.push_back(_temp_GENphi_sib);
+
+            GEN_phi_id.push_back(p->pdgId());
+            GEN_phi_pt.push_back(p->pt());
+            GEN_phi_eta.push_back(p->eta());
+            GEN_phi_mass.push_back(p->mass());
+        }
     }
 
+    // for(unsigned int i = 0; i < _temp_GENjpsi.size(); i++) {
+    //     for(unsigned int j = 0; j < _temp_GENpsi2s.size(); j++) {
+    //         if(_temp_GENjpsi[i]->mother(0) != _temp_GENpsi2s[j]->mother(0)) continue;
+    //         GEN_pair_id.push_back(pair<int, int>(i, j));
+    //     }
+    // }
+    // Look for associated J/psi and Phi meson pairs.
     for(unsigned int i = 0; i < _temp_GENjpsi.size(); i++) {
-        for(unsigned int j = 0; j < _temp_GENpsi2s.size(); j++) {
-            if(_temp_GENjpsi[i]->mother(0) != _temp_GENpsi2s[j]->mother(0)) continue;
+        for(unsigned int j = 0; j < _temp_GENphi.size(); j++) {
+            if(_temp_GENjpsi[i]->mother(0) != _temp_GENphi[j]->mother(0)) continue;
             GEN_pair_id.push_back(pair<int, int>(i, j));
         }
     }
