@@ -1,3 +1,3 @@
 #Automatically created by SCRAM
 import os
-__path__.append(os.path.dirname(os.path.abspath(__file__).rsplit('/GenAnalyzer/GenAnalyzer/',1)[0])+'/cfipython/slc7_amd64_gcc700/GenAnalyzer/GenAnalyzer')
+__path__.append(os.path.dirname(os.path.abspath(__file__).rsplit('/GenAnalyzer/GenAnalyzer/',1)[0])+'/cfipython/el8_amd64_gcc10/GenAnalyzer/GenAnalyzer')
